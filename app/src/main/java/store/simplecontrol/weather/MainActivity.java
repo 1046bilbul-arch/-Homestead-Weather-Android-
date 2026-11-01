@@ -1,6 +1,8 @@
 package store.simplecontrol.weather;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Build;
+import android.view.WindowInsets;
 import android.webkit.*;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -9,6 +11,7 @@ public class MainActivity extends Activity {
  WebView web; GeolocationPermissions.Callback pending; String pendingOrigin;
  @Override public void onCreate(Bundle b){super.onCreate(b);
  web=new WebView(this);setContentView(web);
+ if(Build.VERSION.SDK_INT>=35){web.setOnApplyWindowInsetsListener((view,insets)->{int bottom=insets.getInsets(WindowInsets.Type.navigationBars()).bottom;view.setPadding(0,0,0,bottom);return insets;});}
  web.getSettings().setJavaScriptEnabled(true);web.getSettings().setDomStorageEnabled(true);
  web.getSettings().setGeolocationEnabled(true);
  final WebViewAssetLoader loader=new WebViewAssetLoader.Builder().addPathHandler("/assets/",new WebViewAssetLoader.AssetsPathHandler(this)).build();
